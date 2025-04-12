@@ -1,5 +1,6 @@
 import { Meal } from "@/app/api/domain/entities/meal-entity";
 import { MealType } from "@/generated/prisma";
+import { endOfDay, startOfDay } from "date-fns";
 import { prisma } from "../../lib/prisma";
 import { MealRepository } from "../../repositories/meal-repository";
 import { CreateMealMapper } from "../mappers/meal/create-meal-mapper";
@@ -23,10 +24,6 @@ export class PrismaMealRepository implements MealRepository {
     });
 
     return result.map(MealMapper.toDomain);
-  }
-
-  findById(id: string): Promise<Meal | null> {
-    throw new Error("Method not implemented.");
   }
 
   async update(meal: Meal): Promise<Meal> {
@@ -58,5 +55,21 @@ export class PrismaMealRepository implements MealRepository {
     });
 
     return result.map(MealMapper.toDomain);
+  }
+
+  async findMealsOfToday(): Promise<Meal[]> {
+    const todayStart = startOfDay(new Date());
+    const todayEnd = endOfDay(new Date());
+
+    const meals = await prisma.meal.findMany({
+      where: {
+        feedingAt: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    });
+
+    return meals.map(MealMapper.toDomain);
   }
 }
