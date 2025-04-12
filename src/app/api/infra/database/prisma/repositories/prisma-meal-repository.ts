@@ -1,4 +1,5 @@
 import { Meal } from "@/app/api/domain/entities/meal-entity";
+import { MealType } from "@/generated/prisma";
 import { prisma } from "../../lib/prisma";
 import { MealRepository } from "../../repositories/meal-repository";
 import { CreateMealMapper } from "../mappers/meal/create-meal-mapper";
@@ -47,5 +48,15 @@ export class PrismaMealRepository implements MealRepository {
     });
 
     return null;
+  }
+
+  async findByType(type: string): Promise<Meal[]> {
+    const result = await prisma.meal.findMany({
+      where: {
+        type: type as MealType,
+      },
+    });
+
+    return result.map(MealMapper.toDomain);
   }
 }

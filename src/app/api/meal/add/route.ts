@@ -4,5 +4,5 @@ import { MealCreateController } from "../../infra/controller/meal/create-meal-co
 const controller = new MealCreateController();
 
 export async function POST(request: NextRequest) {
-  return controller.handle(request);
+  return controller.create(request);
 }

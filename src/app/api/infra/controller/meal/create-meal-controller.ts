@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { mealSchema } from "../../zod/schema/create-meal-schema";
 
 export class MealCreateController {
-  async handle(request: NextRequest) {
+  async create(request: NextRequest) {
     try {
       const body = await request.json();
       const data = mealSchema.parse(body);
