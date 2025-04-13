@@ -151,11 +151,12 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mongodb+srv://admin:jvW6zsAlKiXucQQ9@desafio-tecnico-prismma.sjyrqze.mongodb.net/app?retryWrites=true&w=majority"
+        "value": null
       }
     }
   },
