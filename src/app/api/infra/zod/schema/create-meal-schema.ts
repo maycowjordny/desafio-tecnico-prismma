@@ -15,3 +15,5 @@ export const mealSchema = z.object({
     })
     .positive("Calorias devem ser um número positivo"),
 });
+
+export type MealValidationSchema = z.infer<typeof mealSchema>;
