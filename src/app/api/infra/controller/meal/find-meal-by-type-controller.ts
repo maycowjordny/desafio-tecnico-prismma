@@ -1,6 +1,7 @@
 import { makeFindMealByType } from "@/app/api/application/factories/make-find-meal-by-type-factory";
 import { FindMealByTypeException } from "@/app/api/application/use-cases/meal/errors/find-meal-by-type-exception";
-import { NextRequest, NextResponse } from "next/server";
+import { responseHandler } from "@/utils/response-handler";
+import { NextRequest } from "next/server";
 import { z } from "zod";
 import { mealTypeSchema } from "../../zod/schema/type-meal-schema";
 
@@ -17,23 +18,23 @@ export class FindMealByTypeController {
 
       const meals = await findMealByTypeUseCase.execute(validatedData.type);
 
-      return NextResponse.json({ meals }, { status: 200 });
+      return responseHandler.success({ meals });
     } catch (err) {
       if (err instanceof z.ZodError) {
-        return NextResponse.json(
-          { message: "Tipo de refeição inválido", errors: err.errors },
-          { status: 400 }
+        return responseHandler.badRequest(
+          "Tipo de refeição inválido",
+          err.errors
         );
       }
 
       if (err instanceof FindMealByTypeException) {
-        return NextResponse.json({ message: err.message }, { status: 400 });
+        return responseHandler.badRequest(
+          "Erro de validação nos dados fornecidos para encontrar a refeição por tipo.",
+          err.message
+        );
       }
 
-      return NextResponse.json(
-        { message: "Erro interno no servidor" },
-        { status: 500 }
-      );
+      return responseHandler.internalError("Erro interno no servidor");
     }
   }
 }

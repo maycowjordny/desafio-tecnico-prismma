@@ -1,7 +1,8 @@
 import { makeUpdateMeal } from "@/app/api/application/factories/make-update-meal-factory";
 import { UpdateMealException } from "@/app/api/application/use-cases/meal/errors/update-meal-exception";
 import { Meal } from "@/app/api/domain/entities/meal-entity";
-import { NextRequest, NextResponse } from "next/server";
+import { responseHandler } from "@/utils/response-handler";
+import { NextRequest } from "next/server";
 import { updateMealSchema } from "../../zod/schema/update-meal-schema";
 
 export class MealUpdateController {
@@ -11,13 +12,11 @@ export class MealUpdateController {
       const validatedBody = updateMealSchema.parse(body);
 
       const { searchParams } = new URL(request.url);
-
       const mealId = searchParams.get("id");
 
       if (!mealId) {
-        return NextResponse.json(
-          { message: "Refeição atualizada com sucesso." },
-          { status: 200 }
+        return responseHandler.notFound(
+          "ID da refeição não fornecido para atualização."
         );
       }
 
@@ -30,18 +29,19 @@ export class MealUpdateController {
 
       await updateMealUseCase.execute(mealUpdated);
 
-      return NextResponse.json(
-        { message: "Refeição atualizada com sucesso." },
-        { status: 200 }
-      );
+      return responseHandler.success({
+        message: "Refeição atualizada com sucesso.",
+      });
     } catch (err) {
       if (err instanceof UpdateMealException) {
-        return NextResponse.json({ message: err.message }, { status: 400 });
+        return responseHandler.badRequest(
+          "Erro de validação nos dados fornecidos para atualizar refeição.",
+          err.message
+        );
       }
 
-      return NextResponse.json(
-        { message: "Erro interno ao atualizar a refeição." },
-        { status: 500 }
+      return responseHandler.internalError(
+        "Erro interno ao atualizar a refeição."
       );
     }
   }

@@ -1,5 +1,6 @@
 import { makeGetTotalCaloriesToday } from "@/app/api/application/factories/make-get-total-calories-factory";
 import { GetTotalCaloriesTodaException } from "@/app/api/application/use-cases/meal/errors/get-total-calories-today-exception";
+import { responseHandler } from "@/utils/response-handler";
 import { NextResponse } from "next/server";
 
 export class GetTotalCaloriesTodayController {
@@ -9,14 +10,17 @@ export class GetTotalCaloriesTodayController {
 
       const totalCalories = await getTotalCaloriesTodayUseCase.execute();
 
-      return NextResponse.json({ totalCalories }, { status: 200 });
+      return responseHandler.success({ totalCalories });
     } catch (err) {
       if (err instanceof GetTotalCaloriesTodaException) {
-        return NextResponse.json({ message: err.message }, { status: 400 });
+        return responseHandler.badRequest(
+          "Erro de validação nos dados fornecidos para encontrar o total de calorias diária.",
+          err.message
+        );
       }
-      return NextResponse.json(
-        { message: "Erro ao calcular as calorias de hoje" },
-        { status: 500 }
+
+      return responseHandler.internalError(
+        "Erro de validação nos dados fornecidos para encontrar a refeição por tipo."
       );
     }
   }
