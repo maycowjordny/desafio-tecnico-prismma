@@ -34,12 +34,12 @@ export default function Dashboard() {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  async function getStoredKcalGoal() {
     const storedGoal = localStorage.getItem("kcalGoal");
     if (storedGoal) {
       setKcalGoal(Number(storedGoal));
     }
-  }, []);
+  }
 
   const handleSaveGoal = (newGoal: number) => {
     setKcalGoal(newGoal);
@@ -61,13 +61,14 @@ export default function Dashboard() {
     if (!deleteId) return;
 
     try {
-      const res = await fetch(endpoints.meal.delete(deleteId), {
+      await fetch(endpoints.meal.delete(deleteId), {
         method: "DELETE",
       });
 
-      if (!res.ok) throw new Error();
       setMeals((prev) => prev.filter((meal) => meal.id !== deleteId));
+
       enqueueSnackbar("Refeição deletada com sucesso", { variant: "success" });
+
       fetchTotalCalories();
     } catch {
       enqueueSnackbar("Erro ao deletar refeição", { variant: "error" });
@@ -79,7 +80,6 @@ export default function Dashboard() {
   const fetchTotalCalories = async () => {
     try {
       const res = await fetch(endpoints.meal.totalCalories);
-      if (!res.ok) throw new Error(res.statusText);
       const data = await res.json();
       setTotalCalories(data.totalCalories);
     } catch {
@@ -93,6 +93,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        getStoredKcalGoal();
         await fetchMeals();
         await fetchTotalCalories();
       } finally {

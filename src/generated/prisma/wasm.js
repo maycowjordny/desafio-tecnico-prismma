@@ -118,7 +118,15 @@ exports.Prisma.MealScalarFieldEnum = {
   feedingAt: 'feedingAt',
   type: 'type',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  image: 'image'
 };
 
 exports.Prisma.SortOrder = {
@@ -138,7 +146,8 @@ exports.MealType = exports.$Enums.MealType = {
 };
 
 exports.Prisma.ModelName = {
-  Meal: 'Meal'
+  Meal: 'Meal',
+  User: 'User'
 };
 
 /**

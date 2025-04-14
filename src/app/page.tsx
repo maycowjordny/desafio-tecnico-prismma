@@ -8,7 +8,7 @@ const RedirectPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(paths.dashboard.root);
+    router.push(paths.register);
   }, []);
 
   return null;
