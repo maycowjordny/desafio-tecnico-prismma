@@ -14,9 +14,12 @@ export class MealCreateController {
 
       const meal = new Meal({ ...data });
 
-      const result = await createMeal.execute(meal);
+      await createMeal.execute(meal);
 
-      return NextResponse.json(result, { status: 201 });
+      return NextResponse.json(
+        { message: "Refeição criada com sucesso." },
+        { status: 201 }
+      );
     } catch (err) {
       if (err instanceof CreateMealException) {
         return NextResponse.json({ message: err.message }, { status: 400 });

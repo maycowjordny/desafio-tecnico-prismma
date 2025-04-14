@@ -3,9 +3,6 @@ import { MealDeleteController } from "../../../infra/controller/meal/delete-meal
 
 const controller = new MealDeleteController();
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  return controller.delete(request, params);
+export async function DELETE(request: NextRequest) {
+  return controller.delete(request);
 }

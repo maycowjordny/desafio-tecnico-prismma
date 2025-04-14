@@ -3,12 +3,20 @@ import { DeleteMealException } from "@/app/api/application/use-cases/meal/errors
 import { NextRequest, NextResponse } from "next/server";
 
 export class MealDeleteController {
-  async delete(request: NextRequest, params: { id: string }) {
+  async delete(request: NextRequest) {
     try {
-      const { id } = params;
+      const { searchParams } = new URL(request.url);
 
+      const mealId = searchParams.get("id");
+
+      if (!mealId) {
+        return NextResponse.json(
+          { message: "Refeição excluída com sucesso." },
+          { status: 200 }
+        );
+      }
       const deleteMealUseCase = makeDeleteMeal();
-      await deleteMealUseCase.execute(id);
+      await deleteMealUseCase.execute(mealId);
 
       return NextResponse.json(
         { message: "Refeição excluída com sucesso." },

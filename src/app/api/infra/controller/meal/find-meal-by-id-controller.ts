@@ -5,19 +5,22 @@ import { z } from "zod";
 import { mealPresenter } from "../../presenters/meal-presenter";
 
 export class FindMealByIdController {
-  async listById(request: NextRequest, params: { id: string }) {
+  async listById(request: NextRequest) {
     try {
-      const { id } = params;
+      const { searchParams } = new URL(request.url);
+
+      const mealId = searchParams.get("id");
+
+      if (!mealId) {
+        return this.mealNotFound();
+      }
 
       const findMealByIdUseCase = makeFindMealById();
 
-      const meals = await findMealByIdUseCase.execute(id);
+      const meals = await findMealByIdUseCase.execute(mealId);
 
       if (!meals) {
-        return NextResponse.json(
-          { message: "Refeição não encontrada." },
-          { status: 404 }
-        );
+        return this.mealNotFound();
       }
 
       const mealFormatted = mealPresenter(meals);
@@ -40,5 +43,12 @@ export class FindMealByIdController {
         { status: 500 }
       );
     }
+  }
+
+  private mealNotFound() {
+    return NextResponse.json(
+      { message: "Refeição não encontrada." },
+      { status: 404 }
+    );
   }
 }

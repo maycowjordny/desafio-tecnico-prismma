@@ -5,10 +5,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { updateMealSchema } from "../../zod/schema/update-meal-schema";
 
 export class MealUpdateController {
-  async update(request: NextRequest, mealId: string) {
+  async update(request: NextRequest) {
     try {
       const body = await request.json();
       const validatedBody = updateMealSchema.parse(body);
+
+      const { searchParams } = new URL(request.url);
+
+      const mealId = searchParams.get("id");
+
+      if (!mealId) {
+        return NextResponse.json(
+          { message: "Refeição atualizada com sucesso." },
+          { status: 200 }
+        );
+      }
 
       const updateMealUseCase = makeUpdateMeal();
 
@@ -17,9 +28,12 @@ export class MealUpdateController {
         ...validatedBody,
       });
 
-      const updatedMeal = await updateMealUseCase.execute(mealUpdated);
+      await updateMealUseCase.execute(mealUpdated);
 
-      return NextResponse.json({ meal: updatedMeal }, { status: 200 });
+      return NextResponse.json(
+        { message: "Refeição atualizada com sucesso." },
+        { status: 200 }
+      );
     } catch (err) {
       if (err instanceof UpdateMealException) {
         return NextResponse.json({ message: err.message }, { status: 400 });
