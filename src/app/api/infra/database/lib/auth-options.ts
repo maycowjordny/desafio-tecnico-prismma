@@ -1,3 +1,4 @@
+import { paths } from "@/components/routes/paths/paths";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
@@ -40,6 +41,6 @@ export const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/register",
+    signIn: paths.auth,
   },
 };
