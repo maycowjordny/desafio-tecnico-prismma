@@ -4,9 +4,9 @@ import { GetTotalCaloriesTodaException } from "./errors/get-total-calories-today
 export class GetTotalCaloriesTodayUseCase {
   constructor(private readonly mealRepository: MealRepository) {}
 
-  async execute(): Promise<number> {
+  async execute(userId: string): Promise<number> {
     try {
-      const meals = await this.mealRepository.findMealsOfToday();
+      const meals = await this.mealRepository.findMealsOfToday(userId);
 
       const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
 

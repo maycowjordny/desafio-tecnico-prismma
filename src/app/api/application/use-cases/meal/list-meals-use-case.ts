@@ -5,9 +5,9 @@ import { ListMealsException } from "./errors/list-meals-exception";
 export class ListMealsUseCase {
   constructor(private readonly mealRepository: MealRepository) {}
 
-  async execute(): Promise<Meal[]> {
+  async execute(userId: string): Promise<Meal[]> {
     try {
-      return await this.mealRepository.findAll();
+      return await this.mealRepository.findAll(userId);
     } catch (error) {
       throw new ListMealsException();
     }

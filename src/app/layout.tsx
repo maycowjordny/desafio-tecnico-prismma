@@ -1,4 +1,5 @@
 import SnackbarProvider from "@/components/notistack/notisack";
+import { SessionProvider } from "@/provider/session-provider";
 import { MealTrackerThemeProvider } from "@/provider/theme-provider";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
@@ -27,7 +28,9 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${roboto.variable} antialiased`}>
         <SnackbarProvider>
-          <MealTrackerThemeProvider>{children}</MealTrackerThemeProvider>
+          <SessionProvider>
+            <MealTrackerThemeProvider>{children}</MealTrackerThemeProvider>
+          </SessionProvider>
         </SnackbarProvider>
       </body>
     </html>

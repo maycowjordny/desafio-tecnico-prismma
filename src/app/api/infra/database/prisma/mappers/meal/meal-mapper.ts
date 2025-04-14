@@ -6,6 +6,7 @@ export class MealMapper {
   static toDomain(raw: RawMeal): Meal {
     return new Meal({
       id: raw.id,
+      userId: raw.userId!,
       calories: raw.calories,
       description: raw.description,
       name: raw.name,

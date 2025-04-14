@@ -5,9 +5,9 @@ import { FindMealByIdException } from "./errors/find-meal-by-id-exception";
 export class FindMealByIdUseCase {
   constructor(private readonly mealRepository: MealRepository) {}
 
-  async execute(id: string): Promise<Meal | null> {
+  async execute(mealId: string, userId: string): Promise<Meal | null> {
     try {
-      return await this.mealRepository.findById(id);
+      return await this.mealRepository.findById(mealId, userId);
     } catch (err) {
       throw new FindMealByIdException((err as Error).message);
     }

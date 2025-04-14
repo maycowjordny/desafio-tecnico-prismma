@@ -6,5 +6,5 @@ export const paths = {
     add: `${DASHBOARD_BASE_PATH}/add`,
     edit: (id: string) => `${DASHBOARD_BASE_PATH}/${id}/edit`,
   },
-  register: "/register",
+  auth: "/auth",
 };

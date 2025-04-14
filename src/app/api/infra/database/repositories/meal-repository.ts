@@ -2,9 +2,9 @@ import { Meal } from "@/app/api/domain/entities/meal-entity";
 
 export interface MealRepository {
   create(meal: Meal): Promise<Meal>;
-  findAll(): Promise<Meal[]>;
-  findById(id: string): Promise<Meal | null>;
-  findMealsOfToday(): Promise<Meal[]>;
+  findAll(userId: string): Promise<Meal[]>;
+  findById(mealId: string, userId: string): Promise<Meal | null>;
+  findMealsOfToday(userId: string): Promise<Meal[]>;
   update(meal: Meal): Promise<Meal>;
-  delete(id: string): Promise<null>;
+  delete(mealId: string, userId: string): Promise<null>;
 }

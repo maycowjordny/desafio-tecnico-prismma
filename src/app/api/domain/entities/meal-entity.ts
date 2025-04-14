@@ -4,6 +4,7 @@ import { MealTypeEnum } from "../enum/meal-type-enum";
 
 export type MealProps = {
   id?: string;
+  userId: string;
   name: string;
   description?: string;
   calories: number;
@@ -16,6 +17,10 @@ export type MealProps = {
 export class Meal extends Entity<MealProps> {
   get id() {
     return this.props.id;
+  }
+
+  get userId() {
+    return this.props.userId;
   }
 
   get name() {

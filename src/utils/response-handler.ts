@@ -16,4 +16,8 @@ export const responseHandler = {
   internalError: (message: string) => {
     return NextResponse.json({ message }, { status: 500 });
   },
+
+  unauthorized: (message: string) => {
+    return NextResponse.json({ message }, { status: 401 });
+  },
 };

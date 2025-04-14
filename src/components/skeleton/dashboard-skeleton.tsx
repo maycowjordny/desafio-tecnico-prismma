@@ -1,25 +1,31 @@
-"use client";
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Skeleton } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 
 export default function DashboardSkeleton() {
   return (
-    <Box sx={{ p: 3 }}>
-      <Stack spacing={3}>
-        <Box display="flex" justifyContent="space-between">
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ mb: 4 }}>
+        <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Box>
-            <Skeleton variant="text" width={300} height={60} />
-            <Skeleton variant="text" width={400} height={40} />
+            <Skeleton variant="text" width={200} height={40} />
+            <Skeleton variant="text" width={300} height={30} />
           </Box>
-          <Box display="flex" gap={2}>
+          <Stack direction="row" spacing={2}>
             <Skeleton variant="rounded" width={180} height={40} />
             <Skeleton variant="rounded" width={180} height={40} />
-          </Box>
-        </Box>
+          </Stack>
+        </Stack>
+      </Box>
 
+      <Box sx={{ mb: 4 }}>
         <Skeleton variant="rounded" width="100%" height={120} />
+      </Box>
 
-        <Skeleton variant="rounded" width={200} height={40} />
+      <Box sx={{ mb: 3 }}>
+        <Skeleton variant="rounded" width="100%" height={50} />
+      </Box>
 
+      <Stack spacing={2}>
         {[...Array(3)].map((_, index) => (
           <Skeleton
             key={index}

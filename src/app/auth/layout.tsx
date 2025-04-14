@@ -1,3 +1,4 @@
+import { GuestGuard } from "@/components/guard/guest-guard";
 import { Box, Container } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -17,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
           alignItems: "center",
         }}
       >
-        {children}
+        <GuestGuard>{children}</GuestGuard>
       </Container>
     </Box>
   );

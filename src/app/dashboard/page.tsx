@@ -5,6 +5,7 @@ import DailySummaryCard from "@/components/daily-summary-card/daily-summary-card
 import MealCard from "@/components/meal-card/meal-card";
 import MealTypeFilter from "@/components/meal-type-filter/meal-type-filter";
 import { paths } from "@/components/routes/paths/paths";
+import DashboardSkeleton from "@/components/skeleton/dashboard-skeleton";
 import { Meal } from "@/interface/meal";
 import { theme } from "@/theme/theme";
 import { endpoints } from "@/utils/endpoints";
@@ -108,7 +109,7 @@ export default function Dashboard() {
   );
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return <DashboardSkeleton />;
   }
 
   return (

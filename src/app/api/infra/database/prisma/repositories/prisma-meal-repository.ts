@@ -15,8 +15,11 @@ export class PrismaMealRepository implements MealRepository {
     return MealMapper.toDomain(result);
   }
 
-  async findAll(): Promise<Meal[]> {
+  async findAll(userId: string): Promise<Meal[]> {
     const result = await prisma.meal.findMany({
+      where: {
+        userId,
+      },
       orderBy: {
         name: "asc",
       },
@@ -29,6 +32,7 @@ export class PrismaMealRepository implements MealRepository {
     const result = await prisma.meal.update({
       where: {
         id: meal.id,
+        userId: meal.userId,
       },
       data: UpdateMealMapper.convertToPrisma(meal),
     });
@@ -36,17 +40,18 @@ export class PrismaMealRepository implements MealRepository {
     return MealMapper.toDomain(result);
   }
 
-  async delete(id: string): Promise<null> {
+  async delete(mealId: string, userId: string): Promise<null> {
     await prisma.meal.delete({
       where: {
-        id,
+        id: mealId,
+        userId,
       },
     });
 
     return null;
   }
 
-  async findMealsOfToday(): Promise<Meal[]> {
+  async findMealsOfToday(userId: string): Promise<Meal[]> {
     const todayStart = dayjs().startOf("day").toDate();
     const todayEnd = dayjs().endOf("day").toDate();
 
@@ -56,16 +61,18 @@ export class PrismaMealRepository implements MealRepository {
           gte: todayStart,
           lte: todayEnd,
         },
+        userId,
       },
     });
 
     return meals.map(MealMapper.toDomain);
   }
 
-  async findById(id: string): Promise<Meal | null> {
+  async findById(mealId: string, userId: string): Promise<Meal | null> {
     const result = await prisma.meal.findUnique({
       where: {
-        id,
+        id: mealId,
+        userId,
       },
     });
 
