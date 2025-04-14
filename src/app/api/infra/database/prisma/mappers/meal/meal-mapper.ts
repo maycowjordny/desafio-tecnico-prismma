@@ -7,6 +7,7 @@ export class MealMapper {
     return new Meal({
       id: raw.id,
       calories: raw.calories,
+      description: raw.description,
       name: raw.name,
       type: raw.type as MealTypeEnum,
       feedingAt: raw.feedingAt,

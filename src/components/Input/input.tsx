@@ -18,7 +18,13 @@ export function Input({ name, helperText, type, ...other }: Props) {
           fullWidth
           inputRef={ref}
           type={type}
-          value={field.value}
+          value={type === "number" && field.value === 0 ? "0" : field.value}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            field.onChange(
+              type === "number" ? (newValue ? +newValue : "") : newValue
+            );
+          }}
           error={!!error}
           helperText={error ? error?.message : helperText}
           {...other}

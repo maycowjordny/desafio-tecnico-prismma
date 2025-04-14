@@ -8,24 +8,28 @@ import {
   Trash2,
   Utensils,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { paths } from "../routes/paths/paths";
 
 interface MealCardProps {
-  title: string;
+  id: string;
+  name: string;
   type: string;
-  time: string;
+  feedingAt: Date;
   calories: number;
-  onEdit?: () => void;
   onDelete?: () => void;
 }
 
 export default function MealCard({
-  title,
+  id,
+  name,
   type,
-  time,
+  feedingAt,
   calories,
-  onEdit,
   onDelete,
 }: MealCardProps) {
+  const router = useRouter();
+
   const getMealIcon = (type: string) => {
     const iconProps = {
       size: 20,
@@ -47,6 +51,7 @@ export default function MealCard({
   };
 
   const icon = getMealIcon(type);
+
   return (
     <Paper
       elevation={1}
@@ -76,9 +81,9 @@ export default function MealCard({
         </Box>
 
         <Box>
-          <Typography fontWeight={600}>{title}</Typography>
+          <Typography fontWeight={600}>{name}</Typography>
           <Typography variant="body2" color="text.secondary">
-            {type} • {time}
+            {type} • {new Date(feedingAt).toLocaleString()}
           </Typography>
         </Box>
       </Box>
@@ -89,7 +94,7 @@ export default function MealCard({
         </Typography>
 
         <IconButton
-          onClick={onEdit}
+          onClick={() => router.push(paths.dashboard.edit(id))}
           sx={{
             "&:hover": {
               backgroundColor: theme.palette.primary.light,

@@ -2,7 +2,7 @@ import { MealRepository } from "@/app/api/infra/database/repositories/meal-repos
 import { GetTotalCaloriesTodaException } from "./errors/get-total-calories-today-exception";
 
 export class GetTotalCaloriesTodayUseCase {
-  constructor(private mealRepository: MealRepository) {}
+  constructor(private readonly mealRepository: MealRepository) {}
 
   async execute(): Promise<number> {
     try {

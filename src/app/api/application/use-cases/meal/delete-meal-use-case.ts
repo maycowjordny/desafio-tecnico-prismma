@@ -2,7 +2,7 @@ import { MealRepository } from "../../../infra/database/repositories/meal-reposi
 import { DeleteMealException } from "./errors/delete-meal-exception";
 
 export class DeleteMealUseCase {
-  constructor(private mealRepository: MealRepository) {}
+  constructor(private readonly mealRepository: MealRepository) {}
 
   async execute(id: string): Promise<void> {
     try {

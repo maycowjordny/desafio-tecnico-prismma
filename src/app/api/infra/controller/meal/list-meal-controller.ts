@@ -1,6 +1,7 @@
 import { makeListMeals } from "@/app/api/application/factories/make-list-meal-factory";
 import { ListMealsException } from "@/app/api/application/use-cases/meal/errors/list-meals-exception";
 import { NextRequest, NextResponse } from "next/server";
+import { mealPresenter } from "../../presenters/meal-presenter";
 
 export class MealListController {
   async list(_: NextRequest) {
@@ -9,7 +10,9 @@ export class MealListController {
 
       const meals = await listMealsUseCase.execute();
 
-      return NextResponse.json({ meals }, { status: 200 });
+      const formattedMeals = meals.map(mealPresenter);
+
+      return NextResponse.json({ meals: formattedMeals }, { status: 200 });
     } catch (err) {
       if (err instanceof ListMealsException) {
         return NextResponse.json({ message: err.message }, { status: 400 });

@@ -1,6 +1,6 @@
 import { Meal } from "@/app/api/domain/entities/meal-entity";
 import { MealType } from "@/generated/prisma";
-import { endOfDay, startOfDay } from "date-fns";
+import dayjs from "dayjs";
 import { prisma } from "../../lib/prisma";
 import { MealRepository } from "../../repositories/meal-repository";
 import { CreateMealMapper } from "../mappers/meal/create-meal-mapper";
@@ -58,8 +58,8 @@ export class PrismaMealRepository implements MealRepository {
   }
 
   async findMealsOfToday(): Promise<Meal[]> {
-    const todayStart = startOfDay(new Date());
-    const todayEnd = endOfDay(new Date());
+    const todayStart = dayjs().startOf("day").toDate();
+    const todayEnd = dayjs().endOf("day").toDate();
 
     const meals = await prisma.meal.findMany({
       where: {
@@ -71,5 +71,15 @@ export class PrismaMealRepository implements MealRepository {
     });
 
     return meals.map(MealMapper.toDomain);
+  }
+
+  async findById(id: string): Promise<Meal | null> {
+    const result = await prisma.meal.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return result && MealMapper.toDomain(result);
   }
 }

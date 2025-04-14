@@ -3,7 +3,7 @@ import { MealRepository } from "@/app/api/infra/database/repositories/meal-repos
 import { FindMealByTypeException } from "./errors/find-meal-by-type-exception";
 
 export class FindMealByTypeUseCase {
-  constructor(private mealRepository: MealRepository) {}
+  constructor(private readonly mealRepository: MealRepository) {}
 
   async execute(type: string): Promise<Meal[]> {
     try {

@@ -1,0 +1,11 @@
+import { NextRequest } from "next/server";
+import { FindMealByIdController } from "../../infra/controller/meal/find-meal-by-id-controller";
+
+const controller = new FindMealByIdController();
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  return controller.listById(request, params);
+}
