@@ -3,6 +3,10 @@ import { MealUpdateController } from "../../../infra/controller/meal/update-meal
 
 const controller = new MealUpdateController();
 
-export async function PUT(request: NextRequest) {
-  return controller.update(request);
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+  return controller.update(request, id);
 }

@@ -6,13 +6,10 @@ import { NextRequest } from "next/server";
 import { updateMealSchema } from "../../zod/schema/update-meal-schema";
 
 export class MealUpdateController {
-  async update(request: NextRequest) {
+  async update(request: NextRequest, mealId: string) {
     try {
       const body = await request.json();
       const validatedBody = updateMealSchema.parse(body);
-
-      const { searchParams } = new URL(request.url);
-      const mealId = searchParams.get("id");
 
       if (!mealId) {
         return responseHandler.notFound(
