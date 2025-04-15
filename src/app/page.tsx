@@ -8,7 +8,7 @@ const RedirectPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(paths.register);
+    router.push(paths.auth);
   }, []);
 
   return null;

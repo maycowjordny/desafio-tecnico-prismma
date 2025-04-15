@@ -1,18 +1,12 @@
 import { makeDeleteMeal } from "@/app/api/application/factories/make-delete-meal-factory";
 import { DeleteMealException } from "@/app/api/application/use-cases/meal/errors/delete-meal-exception";
+import { ensureAuthenticated } from "@/utils/get-session-user-id";
 import { responseHandler } from "@/utils/response-handler";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../database/lib/auth-options";
 
 export class MealDeleteController {
   async delete(mealId: string) {
     try {
-      const session = await getServerSession(authOptions);
-      const userId = session?.user?.id;
-
-      if (!userId) {
-        return responseHandler.unauthorized("Usuário não autenticado.");
-      }
+      const userId = await ensureAuthenticated();
 
       if (!mealId) {
         return responseHandler.notFound("Refeição não encontrada.");

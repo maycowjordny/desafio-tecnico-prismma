@@ -5,6 +5,7 @@ export interface Meal {
   name: string;
   type: MealTypeEnum;
   description: string;
+  imageBase64?: string;
   feedingAt: Date;
   calories: number;
 }

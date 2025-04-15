@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 
 export default function MealCreateView() {
   return (
-    <Container>
+    <Container sx={{ pb: 2, flexGrow: 1 }}>
       <MealNewEditForm />
     </Container>
   );

@@ -3,17 +3,23 @@ import { z } from "zod";
 
 const mealTypeEnumValues = Object.values(MealTypeEnum) as [MealTypeEnum];
 
-export const mealSchema = z.object({
-  description: z.string().min(1, "Descrição é obrigatória"),
-  name: z.string().min(1, "Nome é obrigatório"),
-  type: z.enum(mealTypeEnumValues),
-  feedingAt: z.coerce.date({ message: "Data inválida" }),
-  calories: z
-    .number({
-      required_error: "Calorias são obrigatórias",
-      invalid_type_error: "Calorias devem ser um número",
-    })
-    .positive("Calorias devem ser um número positivo"),
-});
+export const mealSchema = z
+  .object({
+    name: z.string().min(1, "Nome é obrigatório"),
+    type: z.enum(mealTypeEnumValues),
+    description: z.string().min(1, "Descrição é obrigatória"),
+    feedingAt: z.date(),
+    calories: z.number().min(0),
+    imageBase64: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.description && !data.imageBase64) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["description"],
+        message: "Descrição ou imagem é obrigatória",
+      });
+    }
+  });
 
 export type MealValidationSchema = z.infer<typeof mealSchema>;

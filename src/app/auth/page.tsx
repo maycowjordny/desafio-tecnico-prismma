@@ -70,7 +70,8 @@ export default function Register() {
             variant="body2"
             sx={{ color: "text.disabled", textAlign: "center", mt: 1 }}
           >
-            Entre com sua conta do Google para acessar o MealTracker
+            Entre ou cadastre-se com sua conta do Google para acessar o
+            MealTracker
           </Typography>
         </Box>
 

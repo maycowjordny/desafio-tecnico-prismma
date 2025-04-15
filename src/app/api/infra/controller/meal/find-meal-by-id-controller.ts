@@ -1,21 +1,15 @@
 import { makeFindMealById } from "@/app/api/application/factories/make-find-meal-by-id-factory";
 import { FindMealByIdException } from "@/app/api/application/use-cases/meal/errors/find-meal-by-id-exception";
+import { ensureAuthenticated } from "@/utils/get-session-user-id";
 import { responseHandler } from "@/utils/response-handler";
-import { getServerSession } from "next-auth";
 import { z } from "zod";
-import { authOptions } from "../../database/lib/auth-options";
 import { mealPresenter } from "../../presenters/meal-presenter";
 
 export class FindMealByIdController {
   async listById(mealId: string) {
     try {
-      const session = await getServerSession(authOptions);
+      const userId = await ensureAuthenticated();
 
-      const userId = session?.user?.id;
-
-      if (!userId) {
-        return responseHandler.unauthorized("Usuário não autenticado.");
-      }
       if (!mealId) {
         return responseHandler.notFound("Refeição não encontrada.");
       }
