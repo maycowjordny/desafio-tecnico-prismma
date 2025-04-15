@@ -10,7 +10,7 @@ export function GuestGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/dashboard"); // ou qualquer rota protegida padrão
+      router.replace("/dashboard");
     }
   }, [status, router]);
 
