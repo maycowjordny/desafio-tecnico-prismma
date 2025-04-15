@@ -25,6 +25,8 @@ export class MealCreateController {
 
       return responseHandler.success("Refeição criada com sucesso.");
     } catch (err) {
+      console.log(err);
+
       if (err instanceof CreateMealException) {
         return responseHandler.badRequest(
           "Erro de validação nos dados fornecidos para criação da refeição.",

@@ -8,7 +8,7 @@ export const mealSchema = z
     name: z.string().min(1, "Nome é obrigatório"),
     type: z.enum(mealTypeEnumValues),
     description: z.string().min(1, "Descrição é obrigatória"),
-    feedingAt: z.date(),
+    feedingAt: z.coerce.date(),
     calories: z.number().min(0),
     imageBase64: z.string().optional(),
   })
