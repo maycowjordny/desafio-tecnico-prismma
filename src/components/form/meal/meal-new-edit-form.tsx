@@ -26,7 +26,7 @@ import {
   Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { ArrowLeft, Brain, Upload } from "lucide-react";
+import { ArrowLeft, Sparkles, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useMemo, useState } from "react";
@@ -313,7 +313,7 @@ export default function MealNewEditForm({ mealId }: Props) {
               variant="contained"
               onClick={handleImageAnalyze}
               disabled={!watch("imageBase64") || isEstimating}
-              startIcon={<Brain />}
+              startIcon={<Sparkles />}
               sx={{
                 width: "100%",
                 py: 1.5,
@@ -334,6 +334,9 @@ export default function MealNewEditForm({ mealId }: Props) {
                 "Descobrir Alimentos"
               )}
             </Button>
+            <Typography variant="caption" color="text.secondary">
+              Formatos aceitos: <strong>.jpg</strong> e <strong>.png</strong>
+            </Typography>
           </Card>
           <Card sx={{ pt: 6, pb: 5, px: 3 }}>
             <Stack alignItems="center" justifyContent="center" gap={2}>
@@ -389,7 +392,7 @@ export default function MealNewEditForm({ mealId }: Props) {
                 label="Data e hora da refeição"
               />
 
-              <Input name="description" label="alimentos" size="small" />
+              <Input name="description" label="Descrição" size="small" />
               <Box
                 display="flex"
                 alignItems="center"
@@ -410,7 +413,7 @@ export default function MealNewEditForm({ mealId }: Props) {
                     variant="contained"
                     onClick={handleEstimate}
                     disabled={!watch("description") || isEstimating}
-                    startIcon={<Brain />}
+                    startIcon={<Sparkles />}
                     sx={{
                       width: "100%",
                       py: 1.5,
