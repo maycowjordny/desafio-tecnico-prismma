@@ -12,7 +12,7 @@ Com interface intuitiva e responsiva, o projeto oferece uma experiência fluida 
 
 ## ▶️ Video aplicação
 
-Assista o [video]() da apresentação do projeto!
+Assista o [https://youtu.be/e4unxP9nZWg](https://youtu.be/e4unxP9nZWg) da apresentação do projeto!
 
 ## 🌐 Deploy
 
